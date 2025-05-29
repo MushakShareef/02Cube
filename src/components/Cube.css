@@ -54,6 +54,10 @@ html, body {
   align-items: center;
   width: 100%;
 }
+.scene {
+  touch-action: none;
+}
+
 
 /* Cube core styles */
 .cube {

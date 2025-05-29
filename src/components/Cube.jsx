@@ -24,6 +24,7 @@ const Cube = ({ images }) => {
     return () => clearInterval(animationRef.current);
   }, [autoRotate]);
 
+  
   // Reset idle timer
   const resetIdleTimer = () => {
     clearTimeout(idleTimeout.current);
@@ -39,20 +40,34 @@ const Cube = ({ images }) => {
     setRotateX((prev) => prev - e.movementY * sensitivity);
   };
 
+  const lastTouch = useRef({ x: 0, y: 0 });
+
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    resetIdleTimer();
+    const touch = e.touches[0];
+    lastTouch.current = { x: touch.clientX, y: touch.clientY };
+  };
+
   const handleTouchMove = (e) => {
+    e.preventDefault();
     resetIdleTimer();
     const touch = e.touches[0];
     if (touch) {
-      const x = touch.clientX;
-      const y = touch.clientY;
-      setRotateY((prev) => prev + (x - window.innerWidth / 2) * 0.002);
-      setRotateX((prev) => prev - (y - window.innerHeight / 2) * 0.002);
+      const deltaX = touch.clientX - lastTouch.current.x;
+      const deltaY = touch.clientY - lastTouch.current.y;
+
+      setRotateY((prev) => prev + deltaX * sensitivity);
+      setRotateX((prev) => prev - deltaY * sensitivity);
+
+      lastTouch.current = { x: touch.clientX, y: touch.clientY };
     }
   };
 
   return (
     <div className="scene"
          onMouseMove={handleMouseMove}
+         onTouchStart={handleTouchStart}
          onTouchMove={handleTouchMove}>
       <div
         className="cube"
