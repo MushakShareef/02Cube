@@ -18,9 +18,11 @@ function App() {
   
 
   return (
+    
     <div className="cube-container">
-      <h1 className="cube-heading">BK Course Cube</h1>
+      <h1 className="cube-heading">BK Course Cube</h1> <br/><br/><br/>
       <Cube images={images} />
+      <br/><br/><br/>
     </div>
   )
 }

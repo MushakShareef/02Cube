@@ -1,66 +1,84 @@
 
 
 
-
 :root {
-  --cube-size: 30vmin;
+  --cube-size: 50vmin;
   --half-cube: calc(var(--cube-size) / 2);
 }
 
-.cube, .face {
-  width: var(--cube-size);
-  height: var(--cube-size);
+/* Reset & base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #023047;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Main container centers everything */
+.cube-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  width: 80vw;
+  background: #fca311;
+  text-align: center;
+}
+
+/* Heading centered and responsive */
+.cube-heading {
+  font-size: 6vw;
+  color: #fff;
+  margin-bottom: 3rem;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Scene centers cube */
+.scene {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Cube core styles */
+.cube {
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  width: var(--cube-size);
+  height: var(--cube-size);
+  position: relative;
+}
+
+/* Cube faces */
 .face {
   position: absolute;
+  width: var(--cube-size);
+  height: var(--cube-size);
   background-size: cover;
   background-position: center;
   opacity: 0.95;
   border: 2px solid #fff;
 }
 
-/* Face positions using --half-cube */
+/* 3D face positions */
 .front  { transform: translateZ(var(--half-cube)); }
 .back   { transform: rotateY(180deg) translateZ(var(--half-cube)); }
 .right  { transform: rotateY(90deg) translateZ(var(--half-cube)); }
 .left   { transform: rotateY(-90deg) translateZ(var(--half-cube)); }
 .top    { transform: rotateX(90deg) translateZ(var(--half-cube)); }
 .bottom { transform: rotateX(-90deg) translateZ(var(--half-cube)); }
-
-.cube {
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.1s ease-out;
-  margin: auto;
-  top: 25%;
-}
-
-.scene {
-  width: 100vw;
-  height: 100vh;
-  perspective: 1000px;
-  touch-action: pan-y;
-}
-
-.cube-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 2rem 1rem 1rem;
-  min-height: 100vh;
-  background: #fca311;
-  box-sizing: border-box;
-}
-
-
-.cube-heading {
-  font-size: 6vw;       /* Responsive font size */
-  max-width: 90vw;      /* Prevents it from exceeding screen width */
-  margin-bottom: .3rem;
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
-  word-wrap: break-word; /* Wrap text if needed */
-  text-align: center;     /* Center text nicely */
-}
